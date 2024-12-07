@@ -249,7 +249,7 @@ public class ShieldExpansionEvents {
         if(SHIELD_STATS.containsKey(key))
             statsMap = SHIELD_STATS.get(key);
         if(statsMap == null)
-            SHIELD_STATS.get("shieldexp:default");
+            statsMap = SHIELD_STATS.get("shieldexp:default");
         Double ret = null;
         if(statsMap != null)
             ret = statsMap.get(value);
