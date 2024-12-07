@@ -34,6 +34,9 @@ import org.infernalstudios.shieldexp.access.LivingEntityAccess;
 import org.infernalstudios.shieldexp.init.DamageTypesInit;
 import org.infernalstudios.shieldexp.init.SoundsInit;
 
+import java.util.Map;
+import java.util.Objects;
+
 import static org.infernalstudios.shieldexp.init.ShieldDataLoader.SHIELD_STATS;
 
 @Mod.EventBusSubscriber(modid = ShieldExpansion.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -243,7 +246,15 @@ public class ShieldExpansionEvents {
     //reads a shield attribute from the given shield's stats map, or the default map if no map is found
     public static Double getShieldValue(Item item, String value) {
         String key = ForgeRegistries.ITEMS.getKey(item).toString();
-        return SHIELD_STATS.containsKey(key) ? SHIELD_STATS.get(key).get(value) : SHIELD_STATS.get("shieldexp:default").get(value);
+        Map<String, Double> statsMap = null;
+        if(SHIELD_STATS.containsKey(key))
+            statsMap = SHIELD_STATS.get(key);
+        if(statsMap == null)
+            SHIELD_STATS.get("shieldexp:default");
+        Double ret = null;
+        if(statsMap != null)
+            ret = statsMap.get(value);
+        return ret != null ? ret : 0.0d;
     }
 
     //increases the current used stamina count of the given player, and removes the blocking state if the given shield's stamina is used up
