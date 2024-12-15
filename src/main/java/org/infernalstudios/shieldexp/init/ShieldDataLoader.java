@@ -111,7 +111,7 @@ public class ShieldDataLoader extends SimpleJsonResourceReloadListener {
             // in case this map ever gets used, log a fatal error
             @Override
             public Double get(Object key) {
-                ShieldExpansion.LOGGER.fatal("The client is missing shield data from the server! This includes the default shield data! Please report this bug to Infernal Studios.");
+                ShieldExpansion.LOGGER.warn("The client is missing shield data from the server! This includes the default shield data! Please report this bug to Infernal Studios.");
 
                 return super.get(key);
             }
