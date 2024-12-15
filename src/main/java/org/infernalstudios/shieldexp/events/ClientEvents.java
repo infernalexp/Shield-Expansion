@@ -65,7 +65,7 @@ public class ClientEvents {
 
     // this event is run on Minecraft.clearLevel() when leaving singleplayer OR disconnecting from a server
     @SubscribeEvent
-    public static void onLoggingOut(ClientPlayerNetworkEvent.LoggingOut event) {
+    public void onLoggingOut(ClientPlayerNetworkEvent.LoggingOut event) {
         ShieldDataLoader.clearAll();
     }
 
