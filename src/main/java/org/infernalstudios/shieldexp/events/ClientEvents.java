@@ -21,6 +21,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ShieldItem;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -29,6 +30,7 @@ import net.minecraftforge.registries.RegistryObject;
 import org.infernalstudios.shieldexp.ShieldExpansion;
 import org.infernalstudios.shieldexp.access.LivingEntityAccess;
 import org.infernalstudios.shieldexp.init.ItemsInit;
+import org.infernalstudios.shieldexp.init.ShieldDataLoader;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -59,6 +61,12 @@ public class ClientEvents {
         Player player = Minecraft.getInstance().player;
         if (player != null && Minecraft.getInstance().options.keyAttack.isDown() && LivingEntityAccess.get(player).getBlocking())
             player.stopUsingItem();
+    }
+
+    // this event is run on Minecraft.clearLevel() when leaving singleplayer OR disconnecting from a server
+    @SubscribeEvent
+    public static void onLoggingOut(ClientPlayerNetworkEvent.LoggingOut event) {
+        ShieldDataLoader.clearAll();
     }
 
     private static void copyOptionalResourcePackIfMissing() {

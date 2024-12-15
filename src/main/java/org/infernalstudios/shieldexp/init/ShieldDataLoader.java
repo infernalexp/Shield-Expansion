@@ -61,8 +61,6 @@ public class ShieldDataLoader extends SimpleJsonResourceReloadListener {
         Player player = event.getEntity();
 
         if (!player.level.isClientSide()){
-            NetworkInit.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player), new ClearShields());
-
             for (Map.Entry<ResourceLocation, JsonElement> file : toSync){
                 NetworkInit.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player), new SyncShields(file.getKey(), file.getValue()));
             }
