@@ -196,3 +196,10 @@ def parseConfig(File config) {
         return (new ConfigSlurper().parse(prop))
     }
 }
+
+idea {
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}
