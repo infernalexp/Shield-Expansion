@@ -29,8 +29,10 @@ import java.util.Map;
 public class ShieldDataLoader extends SimpleJsonResourceReloadListener {
     public static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();
     public static Map<ResourceLocation, JsonElement> FILE_MAP = new HashMap<>();
-    public static Map<String, Map<String, Double>> SHIELD_STATS = new HashMap<>();
-    public static List<Map.Entry<ResourceLocation, JsonElement>> toSync = new ArrayList<>();
+    public static final Map<String, Map<String, Double>> SHIELD_STATS = new ShieldStatsMap();
+    public static final List<Map.Entry<ResourceLocation, JsonElement>> toSync = new ArrayList<>();
+
+    public static final String DEFAULT_SHIELD_NAME = ShieldExpansion.MOD_ID + ":default";
 
     public ShieldDataLoader() {
         super(GSON, "shields");
@@ -47,7 +49,7 @@ public class ShieldDataLoader extends SimpleJsonResourceReloadListener {
         FILE_MAP = files;
 
         for (ResourceLocation name : FILE_MAP.keySet()) {
-            if (ForgeRegistries.ITEMS.containsKey(name) || name.toString().equals(ShieldExpansion.MOD_ID + ":default")) {
+            if (ForgeRegistries.ITEMS.containsKey(name) || name.toString().equals(DEFAULT_SHIELD_NAME)) {
                 JsonElement data = files.get(name);
 
                 parse(name, data.getAsJsonObject());
@@ -69,7 +71,7 @@ public class ShieldDataLoader extends SimpleJsonResourceReloadListener {
 
     public static void parse(ResourceLocation name, JsonObject data) {
         String key = name.toString();
-        if (ForgeRegistries.ITEMS.containsKey(name) || key.equals(ShieldExpansion.MOD_ID + ":default")) {
+        if (ForgeRegistries.ITEMS.containsKey(name) || key.equals(DEFAULT_SHIELD_NAME)) {
             Map<String, Double> stats = new HashMap<>();
             stats.put("cooldownTicks", data.getAsJsonObject().get("cooldownTicks").getAsDouble());
             stats.put("speedFactor", data.getAsJsonObject().get("speedFactor").getAsDouble());
@@ -81,12 +83,47 @@ public class ShieldDataLoader extends SimpleJsonResourceReloadListener {
             SHIELD_STATS.remove(key);
             SHIELD_STATS.put(key, stats);
 
-            if (!key.equals(ShieldExpansion.MOD_ID + ":default"))
+            if (!key.equals(DEFAULT_SHIELD_NAME))
                 Config.extendList(key);
         }
     }
 
     public static void clearAll() {
         SHIELD_STATS.clear();
+    }
+
+    private static class ShieldStatsMap extends HashMap<String, Map<String, Double>> {
+        // This should NEVER need to be used, but just in case the data is missing, this is the hard-coded default data
+        private static final Map<String, Double> EMERGENCY_DEFAULT = new HashMap<>() {
+            {
+                // these should be the same as the ones in src/resources/data/shieldexp/shields/default.json
+                this.put("cooldownTicks", 30.0);
+                this.put("speedFactor", 0.65);
+                this.put("parryDamage", 0.10);
+                this.put("parryTicks", 5.0);
+                this.put("stamina", 2.0);
+                this.put("blastResistance", 0.0);
+                this.put("flatDamage", 1.0);
+            }
+
+            // in case this map ever gets used, log a fatal error
+            @Override
+            public Double get(Object key) {
+                ShieldExpansion.LOGGER.fatal("The client is missing shield data from the server! This includes the default shield data! Please report this bug to Infernal Studios.");
+
+                return super.get(key);
+            }
+        };
+
+        @Override
+        public Map<String, Double> get(Object key) {
+            var result = super.get(key);
+
+            // if we have a result OR we are not trying to get the default, return what we have
+            if (result != null || !key.equals(DEFAULT_SHIELD_NAME)) return result;
+
+            // if we don't have the default, return the emergency default
+            return EMERGENCY_DEFAULT;
+        }
     }
 }
