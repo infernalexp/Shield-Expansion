@@ -59,7 +59,7 @@ public class ClientEvents {
     @SubscribeEvent
     public void onClientTick(TickEvent.ClientTickEvent event) {
         Player player = Minecraft.getInstance().player;
-        if (player != null && Minecraft.getInstance().options.keyAttack.isDown() && LivingEntityAccess.get(player).getBlocking())
+        if (player != null && Minecraft.getInstance().options.keyAttack.isDown() && LivingEntityAccess.get(player).getBlocking() && player.isUsingItem())
             player.stopUsingItem();
     }
 
