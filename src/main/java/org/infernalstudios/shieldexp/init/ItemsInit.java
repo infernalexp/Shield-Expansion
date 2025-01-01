@@ -3,6 +3,7 @@ package org.infernalstudios.shieldexp.init;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ShieldItem;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -26,6 +27,10 @@ public class ItemsInit {
     public static final RegistryObject<ShieldItem> GRIEFER_SHIELD = registerShield("griefer_shield", 282);
 
     public static RegistryObject<ShieldItem> registerShield(String id, int durability) {
+        if (id.equals("paragon_shield") && !ModList.get().isLoaded("miningmaster"))
+            return null;
+        if (id.equals("griefer_shield") && !ModList.get().isLoaded("savage_and_ravage"))
+            return null;
         Item.Properties properties = new Item.Properties().durability(durability).tab(CreativeModeTab.TAB_COMBAT);
         if (id.equals("netherite_shield")) properties.fireResistant();
         RegistryObject<ShieldItem> shield = ITEMS.register(id, () -> new ShieldItem(properties));

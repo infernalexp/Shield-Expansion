@@ -38,3 +38,15 @@ EB Mario - Concept Collaborator
     versionRange="[1.7.0,)"
     ordering="BEFORE"
     side="BOTH"
+[[dependencies.shieldexp]]
+modId="savage_and_ravage"
+mandatory=false
+versionRange="[5.0.0,)"
+ordering="BEFORE"
+side="BOTH"
+[[dependencies.shieldexp]]
+modId="miningmaster"
+mandatory=false
+versionRange="[4.0.0,)"
+ordering="BEFORE"
+side="BOTH"
