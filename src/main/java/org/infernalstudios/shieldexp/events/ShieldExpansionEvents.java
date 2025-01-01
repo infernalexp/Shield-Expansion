@@ -43,7 +43,11 @@ public class ShieldExpansionEvents {
     @SubscribeEvent
     public void onStartUsing(LivingEntityUseItemEvent.Start event) {
         Item item = event.getItem().getItem();
-        if (Config.isShield(item) && event.getEntity() instanceof Player player && player.attackAnim == 0 && !player.getCooldowns().isOnCooldown(item)) {
+        if (event.getEntity() instanceof Player player && player.getCooldowns().isOnCooldown(item)) {
+            event.setCanceled(true);
+            return;
+        }
+        if (Config.isShield(item) && event.getEntity() instanceof Player player && player.attackAnim == 0) {
             int parryTicks = getShieldValue(item, "parryTicks").intValue();
             if (Config.lenientParryEnabled()) parryTicks = parryTicks * 2;
             LivingEntityAccess.get(player).setParryWindow(parryTicks);
