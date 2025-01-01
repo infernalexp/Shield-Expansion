@@ -46,7 +46,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly fg.deobf('maven.modrinth:better-combat:1.7.1+1.19-forge')
+    compileOnly fg.deobf('maven.modrinth:better-combat:1.7.1+1.19.4-forge')
 }
 
 ext.config = parseConfig(file('build.properties'))
