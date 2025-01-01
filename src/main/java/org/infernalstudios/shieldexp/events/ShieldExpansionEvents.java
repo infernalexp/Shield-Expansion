@@ -32,6 +32,7 @@ import org.infernalstudios.shieldexp.init.Config;
 import org.infernalstudios.shieldexp.ShieldExpansion;
 import org.infernalstudios.shieldexp.access.LivingEntityAccess;
 import org.infernalstudios.shieldexp.init.DamageTypesInit;
+import org.infernalstudios.shieldexp.init.ShieldDataLoader;
 import org.infernalstudios.shieldexp.init.SoundsInit;
 
 import static org.infernalstudios.shieldexp.init.ShieldDataLoader.SHIELD_STATS;
@@ -243,7 +244,7 @@ public class ShieldExpansionEvents {
     //reads a shield attribute from the given shield's stats map, or the default map if no map is found
     public static Double getShieldValue(Item item, String value) {
         String key = ForgeRegistries.ITEMS.getKey(item).toString();
-        return SHIELD_STATS.containsKey(key) ? SHIELD_STATS.get(key).get(value) : SHIELD_STATS.get("shieldexp:default").get(value);
+        return SHIELD_STATS.containsKey(key) ? SHIELD_STATS.get(key).get(value) : SHIELD_STATS.get(ShieldDataLoader.DEFAULT_SHIELD_NAME).get(value);
     }
 
     //increases the current used stamina count of the given player, and removes the blocking state if the given shield's stamina is used up

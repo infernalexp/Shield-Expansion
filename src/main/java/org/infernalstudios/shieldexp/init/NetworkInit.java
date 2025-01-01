@@ -19,6 +19,8 @@ public class NetworkInit {
         INSTANCE = NetworkRegistry.newSimpleChannel(new ResourceLocation(ShieldExpansion.MOD_ID, "packets"), () -> "1.0", s -> true, s -> true);
 
         INSTANCE.registerMessage(nextID(), SyncShields.class, SyncShields::encode, SyncShields::new, SyncShields::handle);
+
+        // TODO Delete - This is only kept here so the network isn't angry
         INSTANCE.registerMessage(nextID(), ClearShields.class, ClearShields::encode, ClearShields::new, ClearShields::handle);
     }
 }

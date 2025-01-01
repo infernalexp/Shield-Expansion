@@ -1,11 +1,9 @@
 package org.infernalstudios.shieldexp.network;
 
 import com.google.gson.JsonElement;
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
-import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.NetworkEvent;
@@ -40,9 +38,8 @@ public class SyncShields {
 
     @OnlyIn(Dist.CLIENT)
     private void handle() {
-        Player player = Minecraft.getInstance().player;
-        if (player != null){
-            ShieldDataLoader.parse(shield, data.getAsJsonObject());
-        }
+        // trust that the client can handle this even if the player isn't ready
+        // this data isn't stored to the local player so even if the player is null, it's fine
+        ShieldDataLoader.parse(shield, data.getAsJsonObject());
     }
 }

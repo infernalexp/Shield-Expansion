@@ -1,5 +1,6 @@
 package org.infernalstudios.shieldexp.init;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -65,10 +66,11 @@ public class Config  {
     }
 
     //automatically adds shields to the shield list and config file on datapack load
-    public static void extendList(String id) {
+    public static void extendList(ResourceLocation id) {
+        String itemID = id.toString();
         List<String> newList = new java.util.ArrayList<>(List.of());
         newList.addAll(SHIELD_LIST.get());
-        if (!newList.contains(id)) newList.add(id);
+        if (!newList.contains(itemID)) newList.add(itemID);
         SHIELD_LIST.set(newList);
     }
 
