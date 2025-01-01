@@ -66,11 +66,10 @@ public class Config  {
     }
 
     //automatically adds shields to the shield list and config file on datapack load
-    public static void extendList(ResourceLocation id) {
-        String itemID = id.toString();
+    public static void extendList(String id) {
         List<String> newList = new java.util.ArrayList<>(List.of());
         newList.addAll(SHIELD_LIST.get());
-        if (!newList.contains(itemID)) newList.add(itemID);
+        if (!newList.contains(id)) newList.add(id);
         SHIELD_LIST.set(newList);
     }
 
