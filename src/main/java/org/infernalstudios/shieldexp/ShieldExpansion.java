@@ -18,6 +18,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -27,6 +28,7 @@ import org.apache.logging.log4j.Logger;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import org.infernalstudios.shieldexp.compat.BetterCombatAttackListener;
 import org.infernalstudios.shieldexp.init.*;
 import org.infernalstudios.shieldexp.events.ClientEvents;
 import org.infernalstudios.shieldexp.events.ShieldExpansionEvents;
@@ -53,6 +55,7 @@ public class ShieldExpansion {
 
     private void clientSetup(final FMLClientSetupEvent event) {
         DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> ClientEvents::setup);
+        if (ModList.get().isLoaded("bettercombat")) BetterCombatAttackListener.register();
     }
 
     @SubscribeEvent
