@@ -3,6 +3,7 @@ package org.infernalstudios.shieldexp.events;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import org.infernalstudios.shieldexp.init.ItemsInit;
 
@@ -16,8 +17,10 @@ public class CreativeTabEvents {
             event.accept(ItemsInit.GOLDEN_SHIELD);
             event.accept(ItemsInit.DIAMOND_SHIELD);
             event.accept(ItemsInit.NETHERITE_SHIELD);
-            event.accept(ItemsInit.GRIEFER_SHIELD);
-            event.accept(ItemsInit.PARAGON_SHIELD);
+            if (ModList.get().isLoaded("miningmaster"))
+                event.accept(ItemsInit.PARAGON_SHIELD);
+            if (ModList.get().isLoaded("savage_and_ravage"))
+                event.accept(ItemsInit.GRIEFER_SHIELD);
         }
     }
 }
