@@ -41,7 +41,7 @@ EB Mario - Concept Collaborator
 [[dependencies.shieldexp]]
 modId="savage_and_ravage"
 mandatory=false
-versionRange="[5.0.0,)"
+versionRange="[6.0.0,)"
 ordering="BEFORE"
 side="BOTH"
 [[dependencies.shieldexp]]
