@@ -3,6 +3,7 @@ package org.infernalstudios.shieldexp.events;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -53,8 +54,8 @@ public class ShieldExpansionEvents {
             LivingEntityAccess.get(player).setParryWindow(parryTicks);
             LivingEntityAccess.get(player).setBlockedCooldown(10);
             LivingEntityAccess.get(player).setUsedStamina(0);
-            AttributeModifier speedModifier = new AttributeModifier(player.getUUID() , "Blocking Speed", 4.0*getShieldValue(item, "speedFactor"), AttributeModifier.Operation.MULTIPLY_TOTAL);
-            if (!player.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(speedModifier) && !Config.speedModifierDisabled())
+            AttributeModifier speedModifier = new AttributeModifier(ResourceLocation.parse("Blocking Speed"), 4.0*getShieldValue(item, "speedFactor"), AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+            if (!player.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(ResourceLocation.parse("Blocking Speed")) && !Config.speedModifierDisabled())
                 player.getAttribute(Attributes.MOVEMENT_SPEED).addTransientModifier(speedModifier);
             if (!LivingEntityAccess.get(player).getBlocking())
                 LivingEntityAccess.get(player).setBlocking(true);
@@ -231,7 +232,7 @@ public class ShieldExpansionEvents {
 
     //removes the blocking state
     public void removeBlocking(Player player) {
-        player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(player.getUUID());
+        player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(ResourceLocation.parse("Blocking Speed"));
         if (LivingEntityAccess.get(player).getBlocking())
             LivingEntityAccess.get(player).setBlocking(false);
         LivingEntityAccess.get(player).setParryWindow(0);
@@ -267,10 +268,6 @@ public class ShieldExpansionEvents {
 
     //reduces durability of the given player's used shield, and removes the blocking state if it breaks
     public void damageItem(Player player, int amount) {
-        player.getUseItem().hurtAndBreak(amount, player, (player1) -> {
-            player1.broadcastBreakEvent(player.getUsedItemHand() == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
-            removeBlocking(player);
-            player.stopUsingItem();
-        });
+        player.getUseItem().hurtAndBreak(amount, player, player.getUsedItemHand() == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
     }
 }

@@ -52,7 +52,7 @@ public class ClientEvents {
     private static void initShields() {
         ItemPropertyFunction blockFn = (stack, world, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F;
         for (RegistryObject<ShieldItem> shieldItem : ItemsInit.SHIELDS)
-            ItemProperties.register(shieldItem.get(), new ResourceLocation("minecraft:blocking"), blockFn);
+            ItemProperties.register(shieldItem.get(), ResourceLocation.parse("minecraft:blocking"), blockFn);
     }
 
     //desyncs from the server to allow the player to attack despite currently blocking, state is resynced on server-side useTick

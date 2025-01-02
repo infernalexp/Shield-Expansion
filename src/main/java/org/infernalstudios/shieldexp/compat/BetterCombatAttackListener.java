@@ -17,7 +17,7 @@ public class BetterCombatAttackListener {
         BetterCombatClientEvents.ATTACK_START.register((LocalPlayer player, AttackHand hand) -> {
             Item item = player.getOffhandItem().getItem();
             if (Boolean.TRUE.equals(Config.isShield(item))) {
-                player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(player.getUUID());
+                player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifiers();
                 LivingEntityAccess.get(player).setBlocking(false);
                 LivingEntityAccess.get(player).setParryWindow(0);
                 if (!player.getCooldowns().isOnCooldown(item))

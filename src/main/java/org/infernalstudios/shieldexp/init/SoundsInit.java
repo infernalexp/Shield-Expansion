@@ -15,7 +15,7 @@ public class SoundsInit {
     public static final RegistryObject<SoundEvent> PARRY_SOUND = registerSoundEvent("parry_sound");
 
     private static RegistryObject<SoundEvent> registerSoundEvent(String name) {
-        ResourceLocation id = new ResourceLocation(ShieldExpansion.MOD_ID, name);
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(ShieldExpansion.MOD_ID, name);
         return SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(id));
     }
 }

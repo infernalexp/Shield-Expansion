@@ -40,12 +40,12 @@ public class ShieldExpansion {
     public static final String MOD_ID = "shieldexp";
     public static final Logger LOGGER = LogManager.getLogger(NAME);
 
-    public ShieldExpansion() {
-        IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
+    public ShieldExpansion(FMLJavaModLoadingContext context) {
+        IEventBus modBus = context.getModEventBus();
         ItemsInit.ITEMS.register(modBus);
         SoundsInit.SOUND_EVENTS.register(modBus);
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.CONFIG, "ShieldExpansion-common.toml");
+        context.registerConfig(ModConfig.Type.COMMON, Config.CONFIG, "ShieldExpansion-common.toml");
 
         modBus.addListener(this::clientSetup);
         modBus.addListener(this::commonSetup);
