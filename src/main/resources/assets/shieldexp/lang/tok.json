@@ -1,0 +1,31 @@
+{
+  "shieldexp.tooltip.instructions": "sina luka e nena Shift la sona li kama lon",
+  "shieldexp.tooltip.instructions.parry": "ijo li alasa utala e sina la, sina kama sinpin e sinpin sijelo lon tenpo poka la, sina utala sinpin, li weka e ijo pi pana utala a!",
+
+  "shieldexp.tooltip.attribute": "kepeken sama sinpin sijelo la:",
+  "shieldexp.tooltip.attribute.cooldown_ticks": " tenpo lape %s",
+  "shieldexp.tooltip.attribute.speed_factor_slow": " tawa ike",
+  "shieldexp.tooltip.attribute.speed_factor_fast": " tawa pona",
+  "shieldexp.tooltip.attribute.parry_damage": " %s wawa utala sinpin",
+  "shieldexp.tooltip.attribute.parry_ticks": " tenpo %s pi ken utala sinpin",
+  "shieldexp.tooltip.attribute.stamina": " wawa awen %s",
+  "shieldexp.tooltip.attribute.blast_resistance": " awen pi seli pakala pi wawa %s",
+
+  "item.shieldexp.wooden_shield": "sinpin sijelo kasi",
+  "item.shieldexp.golden_shield": "sinpin sijelo jelo",
+  "item.shieldexp.iron_shield": "sinpin sijelo walo",
+  "item.shieldexp.diamond_shield": "sinpin sijelo laso",
+  "item.shieldexp.netherite_shield": "sinpin sijelo pi mani Netherite",
+  "item.shieldexp.paragon_shield": "sinpin sijelo wawa",
+  "item.shieldexp.griefer_shield": "sinpin sijelo pi seli pakala",
+
+  "sounds.shieldexp.parry_sound": "utala sinpin",
+
+  "death.attack.partialblast": "%1$s li pakala tan ni: sinpin sijelo ona li ken ala pini e pakala ni",
+
+  "shieldexp.advancements.get_diamond_shield.title": "sinpin pi pakala ala",
+  "shieldexp.advancements.get_diamond_shield.description": "o pali e sinpin sijelo laso",
+
+  "shieldexp.advancements.get_netherite_shield.title": "ijo pi tawa ala",
+  "shieldexp.advancements.get_netherite_shield.description": "o pali e sinpin sijelo pi mani Netherite"
+}
