@@ -4,31 +4,38 @@ import com.google.gson.JsonElement;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.server.ServerLifecycleHooks;
+import org.infernalstudios.shieldexp.access.LivingEntityAccess;
 import org.infernalstudios.shieldexp.init.ShieldDataLoader;
 
+import java.util.UUID;
 import java.util.function.Supplier;
 
-public class SyncShields {
-    private static final int MAX = 32767 * 2;
-    JsonElement data;
-    ResourceLocation shield;
+import static org.infernalstudios.shieldexp.events.ShieldExpansionEvents.getShieldValue;
 
-    public SyncShields(FriendlyByteBuf buf) {
-        this.shield = buf.readResourceLocation();
-        this.data = GsonHelper.fromJson(ShieldDataLoader.GSON, buf.readUtf(MAX), JsonElement.class);
+public class SyncBlocking {
+    UUID id;
+    boolean blocking;
+
+    public SyncBlocking(FriendlyByteBuf buf) {
+        this.id = buf.readUUID();
+        this.blocking = buf.readBoolean();
     }
 
     public void encode(FriendlyByteBuf buf){
-        buf.writeResourceLocation(shield);
-        buf.writeUtf(this.data.toString());
+        buf.writeUUID(id);
+        buf.writeBoolean(blocking);
     }
 
-    public SyncShields(ResourceLocation shield, JsonElement data){
-        this.shield = shield;
-        this.data = data;
+    public SyncBlocking(UUID id, boolean blocking){
+        this.id = id;
+        this.blocking = blocking;
     }
 
     public void handle(Supplier<NetworkEvent.Context> ctx){
@@ -36,10 +43,16 @@ public class SyncShields {
         ctx.get().setPacketHandled(true);
     }
 
-    @OnlyIn(Dist.CLIENT)
     private void handle() {
-        // trust that the client can handle this even if the player isn't ready
-        // this data isn't stored to the local player so even if the player is null, it's fine
-        ShieldDataLoader.parse(shield, data.getAsJsonObject());
+        Player player = ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayer(id);
+        Item item = player.getOffhandItem().getItem();
+        player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(player.getUUID());
+        LivingEntityAccess.get(player).setBlocking(false);
+        LivingEntityAccess.get(player).setParryWindow(0);
+        if (player.isUsingItem()) {
+            if (!player.getCooldowns().isOnCooldown(item))
+                player.getCooldowns().addCooldown(item, getShieldValue(item, "cooldownTicks").intValue());
+            player.stopUsingItem();
+        }
     }
 }
