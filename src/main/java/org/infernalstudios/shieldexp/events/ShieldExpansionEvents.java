@@ -1,6 +1,8 @@
 package org.infernalstudios.shieldexp.events;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.client.Minecraft;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -23,6 +25,7 @@ import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.infernalstudios.shieldexp.init.Config;
@@ -40,6 +43,10 @@ public class ShieldExpansionEvents {
     public void onStartUsing(LivingEntityUseItemEvent.Start event) {
         Item item = event.getItem().getItem();
         if (event.getEntity() instanceof Player player && player.getCooldowns().isOnCooldown(item)) {
+            event.setCanceled(true);
+            return;
+        }
+        if (event.getEntity() instanceof Player && ModList.get().isLoaded("bettercombat") && Minecraft.getInstance().options.keyAttack.isDown()) {
             event.setCanceled(true);
             return;
         }
