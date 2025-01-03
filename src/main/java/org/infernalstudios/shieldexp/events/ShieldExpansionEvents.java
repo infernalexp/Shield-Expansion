@@ -5,6 +5,7 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -23,6 +24,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
@@ -50,10 +53,6 @@ public class ShieldExpansionEvents {
             event.setCanceled(true);
             return;
         }
-        if (event.getEntity() instanceof Player && ModList.get().isLoaded("bettercombat") && Minecraft.getInstance().options.keyAttack.isDown()) {
-            event.setCanceled(true);
-            return;
-        }
         if (Config.isShield(item) && event.getEntity() instanceof Player player && player.attackAnim == 0) {
             int parryTicks = getShieldValue(item, "parryTicks").intValue();
             if (Config.lenientParryEnabled()) parryTicks = parryTicks * 2;
@@ -65,6 +64,15 @@ public class ShieldExpansionEvents {
                 player.getAttribute(Attributes.MOVEMENT_SPEED).addTransientModifier(speedModifier);
             if (!LivingEntityAccess.get(player).getBlocking())
                 LivingEntityAccess.get(player).setBlocking(true);
+        }
+    }
+
+    @SubscribeEvent
+    @OnlyIn(Dist.CLIENT)
+    public void onStartUsingClient(LivingEntityUseItemEvent.Start event) {
+        if (event.getEntity() instanceof Player player && ModList.get().isLoaded("bettercombat") && Minecraft.getInstance().options.keyAttack.isDown()) {
+            event.setCanceled(true);
+            return;
         }
     }
 
