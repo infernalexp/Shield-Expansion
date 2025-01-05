@@ -1,0 +1,31 @@
+{
+  "shieldexp.tooltip.instructions": "Talimatlar için Shift tuşunu basılı tut",
+  "shieldexp.tooltip.instructions.parry": "Saldırıları savuşturmak için vurulmadan hemen önce kalkanını kaldır!",
+
+  "shieldexp.tooltip.attribute": "Kalkan olarak kullanıldığında:",
+  "shieldexp.tooltip.attribute.cooldown_ticks": " %ss Bekleme Süresi",
+  "shieldexp.tooltip.attribute.speed_factor_slow": " Yavaş Hareket",
+  "shieldexp.tooltip.attribute.speed_factor_fast": " Hızlı Hareket",
+  "shieldexp.tooltip.attribute.parry_damage": " %s Savuşturma Hasarı",
+  "shieldexp.tooltip.attribute.parry_ticks": " %ss Savuşturma Süresi",
+  "shieldexp.tooltip.attribute.stamina": " %s Dayanma Gücü",
+  "shieldexp.tooltip.attribute.blast_resistance": " %s Patlama Direnci",
+
+  "item.shieldexp.wooden_shield": "Ahşap Kalkan",
+  "item.shieldexp.golden_shield": "Altın Kalkan",
+  "item.shieldexp.iron_shield": "Demir Kalkan",
+  "item.shieldexp.diamond_shield": "Elmas Kalkan",
+  "item.shieldexp.netherite_shield": "Netherit Kalkan",
+  "item.shieldexp.paragon_shield": "Paragon Kalkanı",
+  "item.shieldexp.griefer_shield": "Griefer Kalkanı",
+
+  "sounds.shieldexp.parry_sound": "Başarılı savuşturma",
+
+  "death.attack.partialblast": "%1$s havaya uçtu çünkü kalkanı patlamaya dayanamadı.",
+
+  "shieldexp.advancements.get_diamond_shield.title": "Elmas Kırılmaz",
+  "shieldexp.advancements.get_diamond_shield.description": "Elmas Kalkan üret",
+
+  "shieldexp.advancements.get_netherite_shield.title": "Hareket Ettirilemeyen Nesne",
+  "shieldexp.advancements.get_netherite_shield.description": "Netherit Kalkan üret"
+}
