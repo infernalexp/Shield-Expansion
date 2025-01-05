@@ -1,9 +1,7 @@
 package org.infernalstudios.shieldexp.network;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent;
-
-import java.util.function.Supplier;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
 // TODO Delete - This is only kept here so the network isn't angry
 public class ClearShields {
@@ -16,7 +14,7 @@ public class ClearShields {
     public ClearShields() {
     }
 
-    public void handle(Supplier<NetworkEvent.Context> ctx){
-        ctx.get().setPacketHandled(true);
+    public void handle(CustomPayloadEvent.Context ctx){
+        ctx.setPacketHandled(true);
     }
 }

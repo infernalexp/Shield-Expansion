@@ -6,7 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 import org.infernalstudios.shieldexp.init.ShieldDataLoader;
 
 import java.util.function.Supplier;
@@ -31,9 +31,9 @@ public class SyncShields {
         this.data = data;
     }
 
-    public void handle(Supplier<NetworkEvent.Context> ctx){
-        ctx.get().enqueueWork(this::handle);
-        ctx.get().setPacketHandled(true);
+    public void handle(CustomPayloadEvent.Context ctx){
+        ctx.enqueueWork(this::handle);
+        ctx.setPacketHandled(true);
     }
 
     @OnlyIn(Dist.CLIENT)

@@ -54,8 +54,8 @@ public class ShieldExpansionEvents {
             LivingEntityAccess.get(player).setParryWindow(parryTicks);
             LivingEntityAccess.get(player).setBlockedCooldown(10);
             LivingEntityAccess.get(player).setUsedStamina(0);
-            AttributeModifier speedModifier = new AttributeModifier(ResourceLocation.parse("Blocking Speed"), 4.0*getShieldValue(item, "speedFactor"), AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
-            if (!player.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(ResourceLocation.parse("Blocking Speed")) && !Config.speedModifierDisabled())
+            AttributeModifier speedModifier = new AttributeModifier(ResourceLocation.parse("blockingspeed"), 4.0*getShieldValue(item, "speedFactor"), AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+            if (!player.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(ResourceLocation.parse("blockingspeed")) && !Config.speedModifierDisabled())
                 player.getAttribute(Attributes.MOVEMENT_SPEED).addTransientModifier(speedModifier);
             if (!LivingEntityAccess.get(player).getBlocking())
                 LivingEntityAccess.get(player).setBlocking(true);
@@ -165,7 +165,7 @@ public class ShieldExpansionEvents {
                 damageItem(player, 1);
                 stamina(player, item, 1);
             }
-            event.setCanceled(true);
+            event.setImpactResult(ProjectileImpactEvent.ImpactResult.STOP_AT_CURRENT_NO_DAMAGE);
         }
     }
 
@@ -232,7 +232,7 @@ public class ShieldExpansionEvents {
 
     //removes the blocking state
     public void removeBlocking(Player player) {
-        player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(ResourceLocation.parse("Blocking Speed"));
+        player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(ResourceLocation.parse("blockingspeed"));
         if (LivingEntityAccess.get(player).getBlocking())
             LivingEntityAccess.get(player).setBlocking(false);
         LivingEntityAccess.get(player).setParryWindow(0);

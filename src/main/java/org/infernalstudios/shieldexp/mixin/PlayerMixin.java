@@ -54,12 +54,12 @@ public abstract class PlayerMixin extends LivingEntity implements LivingEntityAc
     }
 
     @Inject(method = "defineSynchedData", at = @At("TAIL"))
-    private void shieldexp$defineSynchedData(CallbackInfo ci) {
-        this.entityData.define(PARRY_COOLDOWN, 0);
-        this.entityData.define(BLOCKED_COOLDOWN, 0);
-        this.entityData.define(USED_STAMINA, 0);
-        this.entityData.define(LAST_SHIELD, new ItemStack(Items.AIR));
-        this.entityData.define(IS_BLOCKING, false);
+    private void shieldexp$defineSynchedData(SynchedEntityData.Builder pBuilder, CallbackInfo ci) {
+        pBuilder.define(PARRY_COOLDOWN, 0);
+        pBuilder.define(BLOCKED_COOLDOWN, 0);
+        pBuilder.define(USED_STAMINA, 0);
+        pBuilder.define(LAST_SHIELD, new ItemStack(Items.AIR));
+        pBuilder.define(IS_BLOCKING, false);
     }
 
     @Inject(method = "tick", at = @At("TAIL"))
