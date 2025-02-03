@@ -54,7 +54,10 @@ public class ShieldExpansion {
     }
 
     private void clientSetup(final FMLClientSetupEvent event) {
-        DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> ClientEvents::setup);
+        // there are some things done in setup that need to be enqueued, such as item properties
+        // that way we don't crash if another mod tries to add item properties at the same time as us
+        // this is because FML client setup is fired in parallel for various mods
+        event.enqueueWork(ClientEvents::setup);
         if (ModList.get().isLoaded("bettercombat")) BetterCombatAttackListener.register();
     }
 
